@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-Portfolio | Saravana Visvanathan | A216453</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --water: #0077B6;
+    --water-deep: #023E8A;
+    --water-light: #90E0EF;
+    --water-pale: #CAF0F8;
+    --drop: #00B4D8;
+    --sand: #F8F9FA;
+    --ink: #0D1B2A;
+    --muted: #5A6A7A;
+    --white: #FFFFFF;
+    --card-bg: #FFFFFF;
+    --border: #DCE8F0;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(0,119,182,0.10);
+    --shadow-hover: 0 8px 36px rgba(0,119,182,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--sand);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(2,62,138,0.97);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 60px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+  }
+  .nav-logo {
+    font-family: 'Lora', serif; font-weight: 600; font-size: 1.1rem;
+    color: var(--water-pale); letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+  .nav-links a {
+    color: var(--water-light); text-decoration: none; font-size: 0.85rem;
+    font-weight: 500; padding: 0.4rem 0.75rem; border-radius: 6px;
+    transition: background 0.2s, color 0.2s; letter-spacing: 0.03em;
+  }
+  .nav-links a:hover { background: rgba(144,224,239,0.18); color: #fff; }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+  .nav-toggle span {
+    display: block; width: 22px; height: 2px;
+    background: var(--water-light); margin: 4px 0; border-radius: 2px; transition: 0.3s;
+  }
+
+  /* ── HERO ── */
+  #home {
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--water-deep) 0%, var(--water) 55%, var(--drop) 100%);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 6rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  #home::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='rgba(255,255,255,0.04)' d='M0,192L60,181.3C120,171,240,149,360,160C480,171,600,213,720,213.3C840,213,960,171,1080,154.7C1200,139,1320,149,1380,154.7L1440,160L1440,320L0,320Z'/%3E%3C/svg%3E") bottom/cover no-repeat;
+  }
+  .hero-inner { position: relative; max-width: 740px; }
+  .hero-sdg-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50px; padding: 0.35rem 1rem; font-size: 0.8rem; font-weight: 600;
+    color: var(--water-pale); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .hero-name {
+    font-family: 'Lora', serif; font-size: clamp(2.2rem,6vw,3.8rem);
+    font-weight: 600; color: #fff; line-height: 1.15; margin-bottom: 0.5rem;
+  }
+  .hero-sub {
+    font-size: 1rem; color: var(--water-light); font-weight: 400;
+    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .hero-intro {
+    font-size: 1.05rem; color: rgba(255,255,255,0.88);
+    max-width: 580px; margin: 0 auto 2rem; line-height: 1.75;
+  }
+  .hero-meta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .hero-pill {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22);
+    color: #fff; border-radius: 50px; padding: 0.4rem 1.1rem; font-size: 0.82rem; font-weight: 500;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    color: rgba(255,255,255,0.5); font-size: 0.72rem;
+    letter-spacing: 0.1em; text-transform: uppercase; animation: bounce 2s infinite;
+  }
+  .scroll-hint svg { width: 18px; height: 18px; stroke: rgba(255,255,255,0.5); fill: none; }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--water); margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Lora', serif; font-size: clamp(1.6rem,4vw,2.4rem);
+    font-weight: 600; color: var(--ink); margin-bottom: 0.75rem; line-height: 1.25;
+  }
+  .section-divider {
+    width: 48px; height: 3px;
+    background: linear-gradient(90deg, var(--water), var(--drop));
+    border-radius: 2px; margin-bottom: 2.5rem;
+  }
+
+  /* ── CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
+    gap: 1.75rem;
+  }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow); transition: transform 0.25s, box-shadow 0.25s;
+    display: flex; flex-direction: column;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+
+  /* ── VIDEO THUMBNAIL PLAYER ── */
+  .yt-thumb {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    background: #0a0a0a;
+    overflow: hidden;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+  }
+  .yt-thumb img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease, opacity 0.3s;
+    opacity: 0.92;
+  }
+  .yt-thumb:hover img { transform: scale(1.04); opacity: 1; }
+
+  /* gradient overlay so play button pops */
+  .yt-thumb::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.55) 100%);
+    z-index: 1;
+  }
+
+  /* play button circle */
+  .yt-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 62px; height: 62px;
+    background: rgba(255,0,0,0.88);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.45);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .yt-thumb:hover .yt-play {
+    background: #ff0000;
+    transform: translate(-50%,-50%) scale(1.12);
+  }
+  .yt-play svg { width: 26px; height: 26px; fill: #fff; margin-left: 4px; }
+
+  /* "Watch on YouTube" label */
+  .yt-label {
+    position: absolute;
+    bottom: 10px; left: 50%; transform: translateX(-50%);
+    z-index: 2;
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .yt-thumb:hover .yt-label { opacity: 1; }
+
+  /* ── CARD BODY ── */
+  .card-body {
+    padding: 1.4rem 1.5rem 1.6rem;
+    flex: 1; display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .card-tag {
+    display: inline-block; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--water); background: var(--water-pale);
+    border-radius: 4px; padding: 0.2rem 0.55rem;
+    margin-bottom: 0.1rem; align-self: flex-start;
+  }
+  .card-title {
+    font-family: 'Lora', serif; font-size: 1.15rem;
+    font-weight: 600; color: var(--ink); line-height: 1.3;
+  }
+  .card-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+  .card-reflection {
+    font-size: 0.88rem; color: var(--ink);
+    background: linear-gradient(135deg, #EFF8FF 0%, #E0F5FB 100%);
+    border-left: 3px solid var(--drop);
+    border-radius: 0 8px 8px 0;
+    padding: 0.75rem 1rem; line-height: 1.65; font-style: italic;
+  }
+  .card-actions { margin-top: auto; padding-top: 0.5rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.55rem 1.2rem; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; text-decoration: none;
+    transition: background 0.2s, transform 0.15s; cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--water); color: #fff; }
+  .btn-primary:hover { background: var(--water-deep); transform: translateY(-1px); }
+  .btn svg { width: 15px; height: 15px; }
+
+  /* ── REFLECTION SECTION ── */
+  #reflection { background: linear-gradient(160deg, var(--water-deep) 0%, var(--water) 100%); }
+  #reflection .section-eyebrow { color: var(--water-light); }
+  #reflection .section-title { color: #fff; }
+  #reflection .section-divider { background: linear-gradient(90deg, var(--water-light), #fff); }
+  .reflection-card {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius); padding: 2rem 2.5rem;
+    color: rgba(255,255,255,0.92); font-size: 1.05rem; line-height: 1.8;
+    backdrop-filter: blur(8px); font-family: 'Lora', serif;
+    font-style: italic; max-width: 780px;
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--white); }
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .skill-chip {
+    background: linear-gradient(135deg, var(--water-pale), #ddf0f8);
+    color: var(--water-deep); border: 1px solid var(--border);
+    border-radius: 50px; padding: 0.45rem 1.1rem;
+    font-size: 0.88rem; font-weight: 600; transition: background 0.2s, transform 0.15s;
+  }
+  .skill-chip:hover {
+    background: linear-gradient(135deg, var(--water-light), var(--drop));
+    color: var(--water-deep); transform: translateY(-2px);
+  }
+
+  /* ── RESOURCES ── */
+  #resources { background: var(--sand); }
+  .resources-list {
+    list-style: none;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1rem;
+  }
+  .resources-list li {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.2rem;
+    font-size: 0.9rem; color: var(--muted);
+    display: flex; align-items: flex-start; gap: 0.6rem;
+  }
+  .resources-list li::before {
+    content: ''; display: block; min-width: 6px; height: 6px;
+    margin-top: 0.55rem; border-radius: 50%; background: var(--drop);
+  }
+  .ai-note {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, #E8F4FF, #D0EFFF);
+    border: 1px solid #B0D8F5; border-radius: var(--radius);
+    padding: 1.2rem 1.5rem; font-size: 0.88rem; color: var(--water-deep); line-height: 1.7;
+  }
+  .ai-note strong { font-weight: 700; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,0.6);
+    text-align: center; padding: 2.5rem 2rem;
+    font-size: 0.85rem; line-height: 1.8;
+  }
+  footer strong { color: var(--water-light); }
+  footer .footer-sdg { margin-top: 0.5rem; font-size: 0.78rem; color: rgba(255,255,255,0.35); letter-spacing: 0.05em; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .nav-links {
+      display: none; flex-direction: column;
+      position: absolute; top: 60px; left: 0; right: 0;
+      background: var(--water-deep); padding: 1rem; gap: 0.25rem;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 0.65rem 1rem; border-radius: 8px; font-size: 0.9rem; }
+    .nav-toggle { display: block; }
+    .cards-grid { grid-template-columns: 1fr; }
+    section { padding: 3.5rem 1.25rem; }
+    .reflection-card { padding: 1.5rem; }
+    .yt-play { width: 50px; height: 50px; }
+    .yt-play svg { width: 20px; height: 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .scroll-hint { animation: none; }
+    .card, .btn, .skill-chip { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav role="navigation" aria-label="Main navigation">
+  <span class="nav-logo">Saravana &middot; A216453</span>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#labs">Labs</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#reflection">Reflection</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#resources">Resources</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="
+    var links=document.getElementById('navLinks');
+    var open=links.classList.toggle('open');
+    this.setAttribute('aria-expanded',open);
+  ">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── HOME ── -->
+<header id="home" role="banner">
+  <div class="hero-inner">
+    <div class="hero-sdg-badge">&#x1F4A7; SDG 6 &middot; Clean Water &amp; Sanitation</div>
+    <h1 class="hero-name">Saravana Visvanathan</h1>
+    <p class="hero-sub">Information Technology &middot; e-Portfolio</p>
+    <p class="hero-intro">
+      I am a passionate Information Technology student at UiTM, exploring mobile application development to solve real-world problems. My work centres on SDG 6 — Clean Water and Sanitation — through the Hygiene Hero app, which encourages communities to build better hygiene habits. Guided by Sir Izwan, this portfolio documents my learning journey from UI fundamentals to cloud-connected, sensor-driven Android applications.
+    </p>
+    <div class="hero-meta">
+      <span class="hero-pill">&#x1F4CB; Matric: A216453</span>
+      <span class="hero-pill">&#x1F393; Programme: IT</span>
+      <span class="hero-pill">&#x1F468;&#x200D;&#x1F3EB; Sir Izwan</span>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true">
+    <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    scroll
+  </div>
+</header>
+
+<!-- ── LABS ── -->
+<section id="labs">
+  <div class="container">
+    <p class="section-eyebrow">Hands-On Practice</p>
+    <h2 class="section-title">Lab Work</h2>
+    <div class="section-divider"></div>
+    <div class="cards-grid">
+
+      <!-- Lab 1 -->
+      <article class="card" aria-label="Lab 1 – UI Design">
+        <a class="yt-thumb"
+           href="https://youtube.com/shorts/QV-ZUUZa8e4"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Watch Lab 1 UI Design on YouTube">
+          <img src="https://i.ytimg.com/vi/QV-ZUUZa8e4/hqdefault.jpg"
+               alt="Lab 1 UI Design thumbnail" loading="lazy">
+          <span class="yt-play">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </span>
+          <span class="yt-label">Watch on YouTube</span>
+        </a>
+        <div class="card-body">
+          <span class="card-tag">Lab 1</span>
+          <h3 class="card-title">UI Design Fundamentals</h3>
+          <p class="card-desc">Building my first Android screens using XML layouts, exploring LinearLayout, ConstraintLayout, and basic UI widgets to craft a clean interface for the Hygiene Hero app.</p>
+          <blockquote class="card-reflection">
+            This lab taught me how much thought goes into placing a single button. I struggled initially with ConstraintLayout chains, but once it clicked, I could see how proper UI structure saves development time later. The experience made me appreciate intentional design over trial-and-error layout tweaking.
+          </blockquote>
+        </div>
+      </article>
+
+      <!-- Lab 2 -->
+      <article class="card" aria-label="Lab 2 – Interaction Design">
+        <a class="yt-thumb"
+           href="https://youtube.com/shorts/MzY_EjBoUwk"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Watch Lab 2 Interaction on YouTube">
+          <img src="https://i.ytimg.com/vi/MzY_EjBoUwk/hqdefault.jpg"
+               alt="Lab 2 Interaction Design thumbnail" loading="lazy">
+          <span class="yt-play">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </span>
+          <span class="yt-label">Watch on YouTube</span>
+        </a>
+        <div class="card-body">
+          <span class="card-tag">Lab 2</span>
+          <h3 class="card-title">Interaction &amp; Event Handling</h3>
+          <p class="card-desc">Implementing click listeners, input validation, and intent-based screen navigation to bring the Hygiene Hero interface to life with meaningful user interactions.</p>
+          <blockquote class="card-reflection">
+            Wiring up interactions revealed how Android's Activity lifecycle actually governs everything. I learned to handle button states carefully to avoid crashes when users tap rapidly. Writing clean event-handler logic made my code far more readable and maintainable going forward.
+          </blockquote>
+        </div>
+      </article>
+
+      <!-- Lab 3 -->
+      <article class="card" aria-label="Lab 3 – Material Design">
+        <a class="yt-thumb"
+           href="https://youtube.com/shorts/qrW5FnkDuL8"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Watch Lab 3 Material Design on YouTube">
+          <img src="https://i.ytimg.com/vi/qrW5FnkDuL8/hqdefault.jpg"
+               alt="Lab 3 Material Design thumbnail" loading="lazy">
+          <span class="yt-play">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </span>
+          <span class="yt-label">Watch on YouTube</span>
+        </a>
+        <div class="card-body">
+          <span class="card-tag">Lab 3</span>
+          <h3 class="card-title">Material Design Components</h3>
+          <p class="card-desc">Applying Google's Material Design 3 guidelines — cards, FABs, snackbars, and colour theming — to give Hygiene Hero a polished, consistent look and feel.</p>
+          <blockquote class="card-reflection">
+            Material Design felt like learning a visual language. The component library removed guesswork from spacing and elevation, letting me focus on the user flow instead of pixel-pushing. I now understand why design systems exist and how they scale across an entire app.
+          </blockquote>
+        </div>
+      </article>
+
+      <!-- Lab 4 -->
+      <article class="card" aria-label="Lab 4 – Navigation">
+        <a class="yt-thumb"
+           href="https://youtu.be/B0ipo62fbS0"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Watch Lab 4 Navigation on YouTube">
+          <img src="https://i.ytimg.com/vi/B0ipo62fbS0/hqdefault.jpg"
+               alt="Lab 4 Navigation Component thumbnail" loading="lazy">
+          <span class="yt-play">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </span>
+          <span class="yt-label">Watch on YouTube</span>
+        </a>
+        <div class="card-body">
+          <span class="card-tag">Lab 4</span>
+          <h3 class="card-title">Jetpack Navigation Component</h3>
+          <p class="card-desc">Setting up the Navigation Graph, bottom navigation bar, and safe-args to enable fluid, back-stack-aware transitions between Hygiene Hero's core screens.</p>
+          <blockquote class="card-reflection">
+            The Navigation Component turned what used to be a tangle of intent flags into a simple visual graph. Safe Args eliminated an entire class of type-cast bugs I had been fighting. Seeing the nav graph as a diagram helped me reason about the app's architecture at a much higher level.
+          </blockquote>
+        </div>
+      </article>
+
+      <!-- Lab 5 -->
+      <article class="card" aria-label="Lab 5 – Room Database">
+        <a class="yt-thumb"
+           href="https://youtu.be/-36z2RoOZ4g"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Watch Lab 5 Room Database on YouTube">
+          <img src="https://i.ytimg.com/vi/-36z2RoOZ4g/hqdefault.jpg"
+               alt="Lab 5 Room Database thumbnail" loading="lazy">
+          <span class="yt-play">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </span>
+          <span class="yt-label">Watch on YouTube</span>
+        </a>
+        <div class="card-body">
+          <span class="card-tag">Lab 5</span>
+          <h3 class="card-title">Room Persistence Library</h3>
+          <p class="card-desc">Designing an SQLite-backed Room database with DAOs, Entities, and Flow-reactive queries so Hygiene Hero can persist hygiene logs offline and sync them to the cloud.</p>
+          <blockquote class="card-reflection">
+            Room abstracted away raw SQL boilerplate while keeping me in control of the schema. Combining Flow with ViewModel meant the UI automatically reflected database changes — no manual refresh logic needed. This reactive pattern fundamentally changed how I think about data and UI synchronisation.
+          </blockquote>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects" style="background: var(--white);">
+  <div class="container">
+    <p class="section-eyebrow">Applied Development</p>
+    <h2 class="section-title">Projects</h2>
+    <div class="section-divider"></div>
+    <div class="cards-grid">
+
+      <!-- Project 1 -->
+      <article class="card" aria-label="Project 1 – Hygiene Hero Navigation">
+        <a class="yt-thumb"
+           href="https://youtu.be/uiy1V8-yjUQ"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Watch Project 1 VSR on YouTube">
+          <img src="https://i.ytimg.com/vi/uiy1V8-yjUQ/hqdefault.jpg"
+               alt="Project 1 Hygiene Hero VSR thumbnail" loading="lazy">
+          <span class="yt-play">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </span>
+          <span class="yt-label">Watch on YouTube</span>
+        </a>
+        <div class="card-body">
+          <span class="card-tag">Project 1 &middot; Lab 4+</span>
+          <h3 class="card-title">Hygiene Hero — Navigation &amp; Working Features</h3>
+          <p class="card-desc">
+            <strong>Problem:</strong> Many Malaysians lack consistent hygiene routines, especially handwashing, leading to preventable disease spread. Hygiene Hero gamifies daily hygiene tasks with streaks, badges, and progress tracking to build lasting habits.
+          </p>
+          <blockquote class="card-reflection">
+            Integrating all labs into a single coherent app was more challenging than I anticipated — design inconsistencies surfaced immediately during user testing. I learned to iterate quickly, treating every bug as design feedback rather than just a code error. This project solidified my understanding of the MVVM pattern and the value of separating concerns in Android development.
+          </blockquote>
+          <div class="card-actions">
+            <a href="https://github.com/saravana-hygienehero/A216453_WAN_LAB03"
+               target="_blank" rel="noopener noreferrer"
+               class="btn btn-primary" aria-label="View Project 1 on GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="card" aria-label="Project 2 – Hygiene Hero API Sensors Cloud">
+        <a class="yt-thumb"
+           href="https://youtu.be/kkom_5BW9AQ"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Watch Project 2 VSR on YouTube">
+          <img src="https://i.ytimg.com/vi/kkom_5BW9AQ/hqdefault.jpg"
+               alt="Project 2 Hygiene Hero Advanced VSR thumbnail" loading="lazy">
+          <span class="yt-play">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </span>
+          <span class="yt-label">Watch on YouTube</span>
+        </a>
+        <div class="card-body">
+          <span class="card-tag">Project 2 &middot; Lab 5 + API + Cloud</span>
+          <h3 class="card-title">Hygiene Hero — API, Sensors &amp; Cloud</h3>
+          <p class="card-desc">
+            <strong>Problem:</strong> Offline-only hygiene trackers fail users when they switch devices or lose data. This version connects to Firebase Firestore for cloud sync, uses device sensors for gesture-triggered logging, and pulls WHO hygiene tips via a REST API for contextual nudges.
+          </p>
+          <blockquote class="card-reflection">
+            Merging local Room data with Firestore taught me the complexities of offline-first architecture and conflict resolution. Implementing CameraX for handwashing verification using ML Kit was a breakthrough moment — the sensor integration made the app feel truly intelligent. This project pushed my skills into production-readiness territory and gave me confidence to build full-stack mobile solutions.
+          </blockquote>
+          <div class="card-actions">
+            <a href="https://github.com/saravana-hygienehero/A216453_WAN_LAB03"
+               target="_blank" rel="noopener noreferrer"
+               class="btn btn-primary" aria-label="View Project 2 on GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── REFLECTION ── -->
+<section id="reflection">
+  <div class="container">
+    <p class="section-eyebrow">Learning Journey</p>
+    <h2 class="section-title">Reflection</h2>
+    <div class="section-divider"></div>
+    <div class="reflection-card" role="article" aria-label="Personal reflection">
+      This semester's mobile application development course transformed my relationship with software. I came in knowing how to write code; I leave knowing how to build systems — architecting data flows, designing for real users, and thinking about what happens when things go wrong offline. Working on Hygiene Hero anchored every abstract concept to a purpose I genuinely care about: improving public health outcomes in Malaysia through technology that meets people where they already are — their smartphones. The SDG 6 focus was not a checkbox but a compass; every feature decision asked "does this make it easier for someone to wash their hands today?" I am proud of how far the app has evolved from a static XML screen in Lab 1 to a cloud-synced, sensor-aware application, and I am even prouder of the engineering thinking that will carry me far beyond this course.
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="container">
+    <p class="section-eyebrow">Technology</p>
+    <h2 class="section-title">Skills &amp; Tech Stack</h2>
+    <div class="section-divider"></div>
+    <div class="skills-grid" role="list" aria-label="Skills and technologies">
+      <span class="skill-chip" role="listitem">Kotlin</span>
+      <span class="skill-chip" role="listitem">Jetpack Compose</span>
+      <span class="skill-chip" role="listitem">Android SDK</span>
+      <span class="skill-chip" role="listitem">Room Database</span>
+      <span class="skill-chip" role="listitem">Retrofit</span>
+      <span class="skill-chip" role="listitem">Firebase Firestore</span>
+      <span class="skill-chip" role="listitem">ML Kit</span>
+      <span class="skill-chip" role="listitem">CameraX</span>
+      <span class="skill-chip" role="listitem">Navigation Component</span>
+      <span class="skill-chip" role="listitem">Material Design 3</span>
+      <span class="skill-chip" role="listitem">MVVM Architecture</span>
+      <span class="skill-chip" role="listitem">Coroutines &amp; Flow</span>
+      <span class="skill-chip" role="listitem">ViewModel</span>
+      <span class="skill-chip" role="listitem">LiveData</span>
+      <span class="skill-chip" role="listitem">Safe Args</span>
+      <span class="skill-chip" role="listitem">GitHub</span>
+      <span class="skill-chip" role="listitem">Android Studio</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESOURCES ── -->
+<section id="resources">
+  <div class="container">
+    <p class="section-eyebrow">References &amp; Acknowledgements</p>
+    <h2 class="section-title">Resources</h2>
+    <div class="section-divider"></div>
+    <ul class="resources-list" aria-label="APIs, libraries, and resources">
+      <li>Android Jetpack Navigation Component — developer.android.com/guide/navigation</li>
+      <li>Room Persistence Library — developer.android.com/training/data-storage/room</li>
+      <li>Firebase Firestore SDK — firebase.google.com/docs/firestore/quickstart</li>
+      <li>Retrofit 2 by Square — square.github.io/retrofit</li>
+      <li>CameraX Jetpack Library — developer.android.com/training/camerax</li>
+      <li>ML Kit On-Device Vision — developers.google.com/ml-kit</li>
+      <li>Material Design 3 Components — m3.material.io</li>
+      <li>Kotlin Coroutines Guide — kotlinlang.org/docs/coroutines-guide.html</li>
+      <li>WHO Hygiene Guidelines — who.int/health-topics/hand-hygiene</li>
+      <li>Google Fonts — fonts.google.com (Space Grotesk, Lora)</li>
+      <li>UN SDG 6 Clean Water &amp; Sanitation — sdgs.un.org/goals/goal6</li>
+    </ul>
+    <div class="ai-note" role="note">
+      <strong>AI Assistance Acknowledgement:</strong> Portions of this e-Portfolio's HTML/CSS structure and placeholder reflection text were drafted with assistance from Claude (Anthropic) as a learning and productivity tool. All code was reviewed, understood, and adapted by Saravana Visvanathan. AI-generated content was used responsibly in accordance with UiTM's academic integrity guidelines.
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer role="contentinfo">
+  <p><strong>Saravana Visvanathan</strong> &nbsp;&middot;&nbsp; Matric No: <strong>A216453</strong> &nbsp;&middot;&nbsp; Information Technology</p>
+  <p>Instructor: Sir Izwan &nbsp;&middot;&nbsp; Universiti Teknologi MARA</p>
+  <p class="footer-sdg">SDG 6 &middot; Clean Water &amp; Sanitation — Hygiene Hero &middot; &copy; 2025</p>
+</footer>
+
+</body>
+</html>
